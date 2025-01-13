@@ -19,5 +19,5 @@
             "document_url/static/src/scss/document_url.scss",
         ],
     },
-    "installable": False,
+    "installable": True,
 }
