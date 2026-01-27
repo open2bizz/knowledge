@@ -10,26 +10,28 @@
     <record id="ir_attachment_view_user_documents" model="ir.ui.view">
         <field name="name">Documents search view: additional filters</field>
         <field name="model">ir.attachment</field>
-        <field name="inherit_id" ref="base.view_attachment_search" />
+        <field name="inherit_id" ref="base.view_attachment_search"/>
         <field name="arch" type="xml">
-            <search>
-                <field name="res_model" />
-                <field name="index_content" />
+
+            <xpath expr="//search" position="inside">
+                <field name="res_model"/>
+                <field name="index_content"/>
+
                 <filter
                     name="user_documents"
                     string="Documents"
-                    domain="[('res_model', 'not like', 'ir.%'), ('res_model', '!=', False)]"
+                    domain="[('res_model', 'not like', 'ir.%'), ('res_model', '!=', False)]" />
+
+                <filter
+                    name="group_model"
+                    string="Group by Model"
+                    context="{'group_by': 'res_model'}"
                 />
-                <group string="Group by">
-                    <filter
-                        name="group_model"
-                        string="Model"
-                        context="{'group_by': 'res_model'}"
-                    />
-                </group>
-            </search>
+            </xpath>
+
         </field>
     </record>
+
     <!-- Top menu item -->
     <menuitem
         id="menu_document_root"

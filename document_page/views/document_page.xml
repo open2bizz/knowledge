@@ -37,66 +37,29 @@
             <form string="Document Page">
                 <sheet>
                     <div name="button_box" id="button_box" class="oe_button_box" />
-                    <widget
-                        name="web_ribbon"
-                        title="Archived"
-                        bg_color="bg-danger"
-                        invisible="active"
-                    />
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active" />
                     <field name="active" invisible="1" />
                     <field name="type" invisible="1" />
-                    <field
-                        name="image"
-                        widget="image"
-                        class="oe_avatar"
-                        style="z-index:1"
-                    />
+                    <field name="image" widget="image" class="oe_avatar" style="z-index:1" />
                     <div class="oe_title">
                         <h1>
                             <field name="name" placeholder="Name" />
                         </h1>
                     </div>
-                    <field
-                        name="content"
-                        widget="html"
-                        placeholder="e.g. Once upon a time..."
-                        required="1"
-                        options="{'safe': True, 'codeview': True, 'collaborative': True}"
-                    />
+                    <field name="content" widget="html" placeholder="e.g. Once upon a time..." required="1" options="{'safe': True, 'codeview': True, 'collaborative': True}" />
                     <notebook>
                         <page name="info" string="Information">
                             <group>
                                 <group>
-                                    <field
-                                        name="parent_id"
-                                        required="True"
-                                        string="Category"
-                                        context="{'default_type':'category', 'form_view_ref': 'document_page.view_category_form'}"
-                                    />
-                                    <field
-                                        name="company_id"
-                                        groups="base.group_multi_company"
-                                    />
+                                    <field name="parent_id" required="True" string="Category" context="{'default_type':'category', 'form_view_ref': 'document_page.view_category_form'}" />
+                                    <field name="company_id" groups="base.group_multi_company" />
                                     <field name="content_uid" />
                                     <field name="content_date" />
-                                    <field
-                                        name="menu_id"
-                                        readonly="1"
-                                        invisible="not menu_id"
-                                    />
+                                    <field name="menu_id" readonly="1" invisible="not menu_id" />
                                 </group>
                                 <group string="Revision">
-                                    <field
-                                        name="draft_name"
-                                        placeholder="Rev 01"
-                                        required="True"
-                                    />
-                                    <field
-                                        name="draft_summary"
-                                        placeholder="eg: Changed ... for ..."
-                                        required="True"
-                                        widget="text"
-                                    />
+                                    <field name="draft_name" placeholder="Rev 01" required="True" />
+                                    <field name="draft_summary" placeholder="eg: Changed ... for ..." required="True" widget="text" />
                                 </group>
                             </group>
                         </page>
@@ -126,14 +89,9 @@
                 <h1>
                     <field name="name" placeholder="Name" />
                 </h1>
-                <field
-                    name="content"
-                    widget="html"
-                    class="oe_view_only"
-                    required="1"
-                    options='{"safe": True}'
+                <field name="content" widget="html" class="oe_view_only" required="1" options='{"safe": True}'
                 />
-            </form>
+        </form>
         </field>
     </record>
     <!-- page Search view  -->
@@ -142,45 +100,28 @@
         <field name="model">document.page</field>
         <field name="arch" type="xml">
             <search string="Document Page">
-                <field
-                    name="draft_summary"
-                    string="Summary"
-                    filter_domain="[('draft_summary','ilike',self)]"
-                />
-                <field
-                    name="name"
-                    string="Content"
-                    filter_domain="['|', ('name','ilike',self), ('content','ilike',self)]"
-                />
-                <field name="parent_id" />
-                <field name="create_uid" />
-                <field name="content_uid" />
-                <field name="name" string="Title" />
-                <group expand="0" string="Group By...">
-                    <filter
-                        name="group_by_category"
-                        string="Category"
-                        context="{'group_by':'parent_id'}"
-                    />
-                    <filter
-                        name="group_by_author"
-                        string="Author"
-                        context="{'group_by':'create_uid'}"
-                    />
-                    <filter
-                        name="group_by_last_contributor"
-                        string="Last Contributor"
-                        context="{'group_by':'content_uid'}"
-                    />
-                </group>
+
+                <field name="draft_summary" string="Summary" filter_domain="[('draft_summary','ilike', self)]"/>
+
+                <field name="name" string="Content" filter_domain="['|', ('name','ilike', self), ('content','ilike', self)]"/>
+
+                <field name="parent_id"/>
+                <field name="create_uid"/>
+                <field name="content_uid"/>
+                <field name="name" string="Title"/>
+
+                <!-- Group by filters -->
+                <filter name="group_by_category" string="Category" context="{'group_by':'parent_id'}"/>
+
+                <filter name="group_by_author" string="Author" context="{'group_by':'create_uid'}"/>
+
+                <filter name="group_by_last_contributor" string="Last Contributor" context="{'group_by':'content_uid'}"/>
+
+                <!-- Search panel -->
                 <searchpanel>
-                    <field
-                        name="parent_id"
-                        icon="fa-folder"
-                        string="Categories"
-                        enable_counters="1"
-                    />
+                    <field name="parent_id" icon="fa-folder" string="Categories" enable_counters="1"/>
                 </searchpanel>
+
             </search>
         </field>
     </record>
@@ -196,7 +137,7 @@
         <field name="search_view_id" ref="view_wiki_filter" />
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
-                Click to create a new web page.
+    Click to create a new web page.
             </p>
         </field>
     </record>
@@ -212,17 +153,6 @@
         <field name="view_id" ref="view_wiki_form" />
         <field name="act_window_id" ref="action_page" />
     </record>
-    <menuitem
-        id="menu_wiki"
-        name="Pages"
-        parent="document_knowledge.menu_document_root"
-        sequence="10"
-    />
-    <menuitem
-        id="menu_page"
-        name="Pages"
-        parent="menu_wiki"
-        action="action_page"
-        sequence="20"
-    />
+    <menuitem id="menu_wiki" name="Pages" parent="document_knowledge.menu_document_root" sequence="10" />
+    <menuitem id="menu_page" name="Pages" parent="menu_wiki" action="action_page" sequence="20" />
 </odoo>
